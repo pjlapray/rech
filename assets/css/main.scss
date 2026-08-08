@@ -37,3 +37,8 @@
     "layout/sidebar",
     "layout/json_cv"
 ;
+
+/* Supprimer définitivement la barre grise du footer */
+.page__footer {
+  display: none !important;
+}
