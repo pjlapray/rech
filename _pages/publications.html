@@ -1,5 +1,5 @@
 ---
-layout: archive
+layout: single
 title: "Publications"
 permalink: /publications/
 author_profile: true
@@ -7,6 +7,33 @@ author_profile: true
 
 {% include base_path %}
 
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr style="border-bottom: 2px solid #ccc; text-align: left;">
+      <th style="padding: 10px; width: 10%;">Année</th>
+      <th style="padding: 10px; width: 70%;">Article & Revue / Conférence</th>
+      <th style="padding: 10px; width: 20%; text-align: center;">Accès</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in site.publications reversed %}
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 12px 10px; vertical-align: top; font-weight: bold;">
+          {{ post.date | date: "%Y" }}
+        </td>
+        <td style="padding: 12px 10px; vertical-align: top;">
+          <strong><a href="{{ post.url | relative_url }}">{{ post.title }}</a></strong><br>
+          <span style="font-style: italic; color: #555;">{{ post.venue }}</span>
+        </td>
+        <td style="padding: 12px 10px; vertical-align: top; text-align: center;">
+          {% if post.bibfile %}
+            <a href="{{ post.bibfile | relative_url }}" download class="btn btn--small" style="margin: 2px; padding: 3px 8px; font-size: 0.8em;">BibTeX</a>
+          {% endif %}
+          {% if post.paperurl %}
+            <a href="{{ post.paperurl }}" target="_blank" class="btn btn--primary btn--small" style="margin: 2px; padding: 3px 8px; font-size: 0.8em;">Lien</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
