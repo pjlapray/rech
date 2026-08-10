@@ -83,3 +83,25 @@
   -ms-overflow-style: none;  /* IE et Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* --- REMONTER LA BARRE LATÉRALE DE GAUCHE --- */
+
+/* 1. Réduire l'espace au-dessus du conteneur de la sidebar */
+.sidebar {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 2. Réduire l'écart supérieur du profil utilisateur */
+.sidebar .vcard,
+.author__avatar {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 3. Ajuster le calage collant (sticky) si présent sur grand écran */
+@media (min-width: 64em) {
+  .sidebar.sticky {
+    top: 0.5em !important; /* Rapproche la sidebar du haut de la page (défaut : 2em) */
+  }
+}
