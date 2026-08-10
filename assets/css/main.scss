@@ -44,11 +44,11 @@
 }
 
 /* Forcer la barre latérale à rester calée en haut */
-@media (min-width: 64em) {
+@media (min-width: 74em) {
   .sidebar.sticky {
     position: sticky !important;
-    top: 2em !important;            /* Reste collée à 2em du haut */
-    max-height: calc(100vh - 3em);  /* Ne dépasse pas la hauteur de l'écran */
+    top: 1em !important;            /* Reste collée à 2em du haut */
+    max-height: calc(100vh - 6em);  /* Ne dépasse pas la hauteur de l'écran */
     overflow-y: auto;               /* Permet de scroller le profil séparément si l'écran est petit */
   }
 }
