@@ -38,69 +38,42 @@
     "layout/json_cv"
 ;
 
-/* Débloque le défilement et la visibilité de la colonne profil */
-.sidebar .author__urls-wrapper {
-  max-height: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: block !important;
-}
+/* --- REINITIALISATION ET RESTRUCTURATION DE LA SIDEBAR --- */
 
-/* S'assure que la liste des liens sociaux est lisible */
-.author__urls {
-  display: block !important;
-  position: relative !important;
-}
-
-/* Supprimer définitivement la barre grise du footer */
-.page__footer {
+/* 1. Désactiver le bouton "Follow" interactif du thème */
+.author__urls-wrapper button {
   display: none !important;
 }
-/* --- COMPACTAGE ET DEBLOCAGE DE LA SIDEBAR --- */
 
-/* 1. Rendre le profil plus compact pour qu'il prenne moins de hauteur */
-.author__avatar {
-  margin-bottom: 10px !important;
-}
-.author__avatar img {
-  max-width: 110px !important; /* Réduit légèrement la photo de profil */
-}
-.author__content {
-  padding-right: 0 !important;
-  margin-bottom: 10px !important;
-}
-.author__name {
-  margin-bottom: 5px !important;
-  font-size: 1.1em !important;
-}
-.author__bio {
-  margin-bottom: 10px !important;
-  font-size: 0.85em !important;
-}
+/* 2. Rendre la sidebar entièrement fluide et scrollable naturellement */
+.sidebar, 
+.sidebar.sticky, 
+.author__content,
 .author__urls-wrapper {
-  display: block !important;
+  position: static !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
 }
-.author__urls-wrapper button {
-  display: none !important; /* Masque le bouton "Follow/Suivre" */
-}
+
+/* 3. Forcer l'affichage simple et lisible des liens */
 .author__urls {
   display: block !important;
   max-height: none !important;
   opacity: 1 !important;
   visibility: visible !important;
+  position: static !important;
+  margin-top: 15px !important;
   padding-left: 0 !important;
 }
+
 .author__urls li {
-  font-size: 0.85em !important; /* Réduit la taille du texte des liens */
-  margin-bottom: 4px !important;  /* Rapproche les liens les uns des autres */
+  display: block !important;
+  margin-bottom: 6px !important;
+  font-size: 0.9em !important;
 }
 
-/* 2. Permettre au profil de défiler si l'écran est très petit */
-@media (min-width: 64em) {
-  .sidebar.sticky {
-    position: sticky !important;
-    top: 10px !important;
-    max-height: calc(100vh - 20px) !important;
-    overflow-y: auto !important; /* Ajoute un défilement interne si nécessaire */
-  }
+/* Conserver le masquage de la barre du footer */
+.page__footer {
+  display: none !important;
 }
