@@ -38,6 +38,20 @@
     "layout/json_cv"
 ;
 
+/* Débloque le défilement et la visibilité de la colonne profil */
+.sidebar .author__urls-wrapper {
+  max-height: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* S'assure que la liste des liens sociaux est lisible */
+.author__urls {
+  display: block !important;
+  position: relative !important;
+}
+
 /* Supprimer définitivement la barre grise du footer */
 .page__footer {
   display: none !important;
