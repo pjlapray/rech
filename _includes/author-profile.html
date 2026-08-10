@@ -1,77 +1,77 @@
 {% include base_path %}
 
 {% if author.name %}
-  {% assign author = site.data.authors[author.name] | default: author %}
+  {% assign author_data = site.data.authors[author.name] | default: author %}
 {% else %}
-  {% assign author = site.author %}
+  {% assign author_data = site.author %}
 {% endif %}
 
 <div itemscope itemtype="http://schema.org/Person" class="vcard">
 
-  <!-- Avatar / Photo -->
+  <!-- Photo / Avatar -->
   <div class="author__avatar">
-    {% if author.avatar contains "://" %}
-    	<img src="{{ author.avatar }}" alt="{{ author.name }}" itemprop="image">
+    {% if author_data.avatar contains "://" %}
+      <img src="{{ author_data.avatar }}" alt="{{ author_data.name }}" itemprop="image">
     {% else %}
-    	<img src="{{ author.avatar | relative_url }}" class="avatar" alt="{{ author.name }}" itemprop="image">
+      <img src="{{ author_data.avatar | relative_url }}" class="avatar" alt="{{ author_data.name }}" itemprop="image">
     {% endif %}
   </div>
 
   <!-- Nom & Bio -->
   <div class="author__content">
-    <h3 class="author__name" itemprop="name">{{ author.name }}</h3>
-    {% if author.bio %}
-      <p class="author__bio" itemprop="description">{{ author.bio }}</p>
+    <h3 class="author__name" itemprop="name">{{ author_data.name }}</h3>
+    {% if author_data.bio %}
+      <p class="author__bio" itemprop="description">{{ author_data.bio }}</p>
     {% endif %}
   </div>
 
-  <!-- Liste complète des liens (sans bouton rétractable JS) -->
+  <!-- Liens sociaux -->
   <div class="author__urls-wrapper">
-    <ul class="author__urls" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+    <ul class="author__urls" style="display: block !important; opacity: 1 !important; visibility: visible !important;">
 
-      {% if author.location %}
-        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> {{ author.location }}</li>
+      {% if author_data.location %}
+        <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> {{ author_data.location }}</li>
       {% endif %}
 
-      {% if author.employer %}
-        <li><i class="fas fa-fw fa-building" aria-hidden="true"></i> {{ author.employer }}</li>
+      {% if author_data.employer %}
+        <li><i class="fas fa-fw fa-building" aria-hidden="true"></i> {{ author_data.employer }}</li>
       {% endif %}
 
-      {% if author.email %}
+      {% if author_data.email %}
         <li>
-          <a href="mailto:{{ author.email }}">
+          <a href="mailto:{{ author_data.email }}">
             <i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email
           </a>
         </li>
       {% endif %}
 
-      {% if author.googlescholar %}
+      {% if author_data.googlescholar %}
         <li>
-          <a href="{{ author.googlescholar }}" target="_blank" rel="noopener noreferrer">
+          <a href="{{ author_data.googlescholar }}" target="_blank" rel="noopener noreferrer">
             <i class="ai ai-google-scholar-square ai-fw" aria-hidden="true"></i> Google Scholar
           </a>
         </li>
       {% endif %}
 
-      {% if author.orcid %}
+      {% if author_data.orcid %}
         <li>
-          <a href="{{ author.orcid }}" target="_blank" rel="noopener noreferrer">
+          <a href="{{ author_data.orcid }}" target="_blank" rel="noopener noreferrer">
             <i class="ai ai-orcid-square ai-fw" aria-hidden="true"></i> ORCID
           </a>
         </li>
       {% endif %}
 
-      {% if author.github %}
+      {% if author_data.github %}
         <li>
-          <a href="https://github.com/{{ author.github }}" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/{{ author_data.github }}" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
           </a>
         </li>
       {% endif %}
 
-      {% if author.linkedin %}
+      {% if author_data.linkedin %}
         <li>
-          <a href="https://www.linkedin.com/in/{{ author.linkedin }}" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/{{ author_data.linkedin }}" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn
           </a>
         </li>
