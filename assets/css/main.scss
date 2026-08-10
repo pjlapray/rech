@@ -38,42 +38,7 @@
     "layout/json_cv"
 ;
 
-/* --- REINITIALISATION ET RESTRUCTURATION DE LA SIDEBAR --- */
-
-/* 1. Désactiver le bouton "Follow" interactif du thème */
-.author__urls-wrapper button {
-  display: none !important;
-}
-
-/* 2. Rendre la sidebar entièrement fluide et scrollable naturellement */
-.sidebar, 
-.sidebar.sticky, 
-.author__content,
-.author__urls-wrapper {
-  position: static !important;
-  max-height: none !important;
-  height: auto !important;
-  overflow: visible !important;
-}
-
-/* 3. Forcer l'affichage simple et lisible des liens */
-.author__urls {
-  display: block !important;
-  max-height: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  position: static !important;
-  margin-top: 15px !important;
-  padding-left: 0 !important;
-}
-
-.author__urls li {
-  display: block !important;
-  margin-bottom: 6px !important;
-  font-size: 0.9em !important;
-}
-
-/* Conserver le masquage de la barre du footer */
+/* Supprimer définitivement la barre grise du footer */
 .page__footer {
   display: none !important;
 }
