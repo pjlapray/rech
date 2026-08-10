@@ -56,39 +56,51 @@
 .page__footer {
   display: none !important;
 }
-/* --- DEBLOCAGE COMPLET DE LA SIDEBAR PROFILE --- */
+/* --- COMPACTAGE ET DEBLOCAGE DE LA SIDEBAR --- */
 
-/* 1. Forcer la liste des liens sociaux à rester dépliée et visible */
+/* 1. Rendre le profil plus compact pour qu'il prenne moins de hauteur */
+.author__avatar {
+  margin-bottom: 10px !important;
+}
+.author__avatar img {
+  max-width: 110px !important; /* Réduit légèrement la photo de profil */
+}
+.author__content {
+  padding-right: 0 !important;
+  margin-bottom: 10px !important;
+}
+.author__name {
+  margin-bottom: 5px !important;
+  font-size: 1.1em !important;
+}
+.author__bio {
+  margin-bottom: 10px !important;
+  font-size: 0.85em !important;
+}
 .author__urls-wrapper {
   display: block !important;
 }
-
 .author__urls-wrapper button {
-  display: none !important; /* Masque le bouton "Follow" qui masque les liens */
+  display: none !important; /* Masque le bouton "Follow/Suivre" */
 }
-
 .author__urls {
   display: block !important;
   max-height: none !important;
   opacity: 1 !important;
   visibility: visible !important;
+  padding-left: 0 !important;
+}
+.author__urls li {
+  font-size: 0.85em !important; /* Réduit la taille du texte des liens */
+  margin-bottom: 4px !important;  /* Rapproche les liens les uns des autres */
 }
 
-/* 2. Permettre à la colonne de défiler si elle dépasse de l'écran */
-.sidebar.sticky {
-  position: relative !important; /* Désactive le blocage fixe sur l'écran */
-  top: 0 !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-
-/* 3. Ajuster sur grand écran (ordinateurs) */
+/* 2. Permettre au profil de défiler si l'écran est très petit */
 @media (min-width: 64em) {
   .sidebar.sticky {
     position: sticky !important;
-    top: 20px !important;
-    max-height: calc(100vh - 40px) !important; /* Ne dépasse jamais la hauteur de la fenêtre */
-    overflow-y: auto !important;             /* Ajoute un défilement propre dans la colonne si nécessaire */
-    padding-right: 10px;
+    top: 10px !important;
+    max-height: calc(100vh - 20px) !important;
+    overflow-y: auto !important; /* Ajoute un défilement interne si nécessaire */
   }
 }
