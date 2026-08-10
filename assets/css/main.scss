@@ -56,14 +56,15 @@
 .page__footer {
   display: none !important;
 }
-/* 1. Empêcher le script du thème de masquer les liens sociaux */
+/* --- DEBLOCAGE COMPLET DE LA SIDEBAR PROFILE --- */
+
+/* 1. Forcer la liste des liens sociaux à rester dépliée et visible */
 .author__urls-wrapper {
   display: block !important;
-  position: relative !important;
 }
 
 .author__urls-wrapper button {
-  display: none !important; /* Masque le bouton "Suivre" / "Follow" qui active le repliement */
+  display: none !important; /* Masque le bouton "Follow" qui masque les liens */
 }
 
 .author__urls {
@@ -73,10 +74,21 @@
   visibility: visible !important;
 }
 
-/* 2. Si la colonne dépasse de l'écran, autoriser le défilement (scrollbar interne) */
+/* 2. Permettre à la colonne de défiler si elle dépasse de l'écran */
 .sidebar.sticky {
-  max-height: 100vh !important;
-  overflow-y: auto !important;
-  /* Pour des scrollbars propres */
-  scrollbar-width: thin;
+  position: relative !important; /* Désactive le blocage fixe sur l'écran */
+  top: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* 3. Ajuster sur grand écran (ordinateurs) */
+@media (min-width: 64em) {
+  .sidebar.sticky {
+    position: sticky !important;
+    top: 20px !important;
+    max-height: calc(100vh - 40px) !important; /* Ne dépasse jamais la hauteur de la fenêtre */
+    overflow-y: auto !important;             /* Ajoute un défilement propre dans la colonne si nécessaire */
+    padding-right: 10px;
+  }
 }
