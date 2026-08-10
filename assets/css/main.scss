@@ -56,3 +56,27 @@
 .page__footer {
   display: none !important;
 }
+/* 1. Empêcher le script du thème de masquer les liens sociaux */
+.author__urls-wrapper {
+  display: block !important;
+  position: relative !important;
+}
+
+.author__urls-wrapper button {
+  display: none !important; /* Masque le bouton "Suivre" / "Follow" qui active le repliement */
+}
+
+.author__urls {
+  display: block !important;
+  max-height: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* 2. Si la colonne dépasse de l'écran, autoriser le défilement (scrollbar interne) */
+.sidebar.sticky {
+  max-height: 100vh !important;
+  overflow-y: auto !important;
+  /* Pour des scrollbars propres */
+  scrollbar-width: thin;
+}
