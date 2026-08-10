@@ -42,3 +42,44 @@
 .page__footer {
   display: none !important;
 }
+
+/* Forcer la barre latérale à rester calée en haut */
+@media (min-width: 64em) {
+  .sidebar.sticky {
+    position: sticky !important;
+    top: 2em !important;            /* Reste collée à 2em du haut */
+    max-height: calc(100vh - 3em);  /* Ne dépasse pas la hauteur de l'écran */
+    overflow-y: auto;               /* Permet de scroller le profil séparément si l'écran est petit */
+  }
+}
+/* Supprimer la barre grise du footer */
+.page__footer {
+  display: none !important;
+}
+
+/* --- SIDEBAR STERILE SANS SCROLLBAR --- */
+
+/* 1. Assurer l'affichage permanent des liens */
+.author__urls {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 2. Style de la sidebar collante sans barre de défilement */
+@media (min-width: 64em) {
+  .sidebar.sticky {
+    position: sticky !important;
+    top: 2em !important;
+    overflow: visible !important; /* Empeche l'apparition d'une scrollbar interne */
+  }
+}
+
+/* Masquer la scrollbar au cas ou le navigateur tente d'en forcer une */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;  /* Firefox */
+}
