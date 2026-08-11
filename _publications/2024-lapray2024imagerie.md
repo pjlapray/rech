@@ -1,5 +1,5 @@
 ---
-title: 'Imagerie par matrice de filtres: Pré-traitements et Mise en \oeuvre'
+title: 'Imagerie par matrice de filtres: Pré-traitements et Mise en œuvre'
 collection: publications
 permalink: /publication/2024-lapray2024imagerie
 date: 2024-01-01

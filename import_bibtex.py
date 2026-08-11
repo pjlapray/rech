@@ -7,22 +7,29 @@ def clean_latex_accents(s):
     if not s:
         return ""
     
-    # Remplacement des accents TeX/LaTeX courants
-    latex_replacements = {
-        # Accent grave (\`e, \`a, \`u, etc.)
+latex_replacements = {
+        # Ligatures (avec ou sans accolades)
+        r"{\oe}": "œ", r"\oe": "œ",
+        r"{\OE}": "Œ", r"\OE": "Œ",
+        r"{\ae}": "æ", r"\ae": "æ",
+        r"{\AE}": "Æ", r"\AE": "Æ",
+        # Esperluette LaTeX (\&) vers le caractère normal
+        r"\&": "&",
+        # Accent grave
         r"\`e": "è", r"\`a": "à", r"\`u": "ù", r"\`o": "ò", r"\`i": "ì",
         r"\`E": "È", r"\`A": "À",
-        # Accent aigu (\'e, \'a, etc.)
+        # Accent aigu
         r"\'e": "é", r"\'a": "á", r"\'i": "í", r"\'o": "ó", r"\'u": "ú",
         r"\'E": "É", r"\'A": "Á",
-        # Circonflexe (\^e, \^a, etc.)
+        # Circonflexe
         r"\^e": "ê", r"\^a": "â", r"\^i": "î", r"\^o": "ô", r"\^u": "û",
         r"\^E": "Ê", r"\^A": "Â",
-        # Tréma (\"e, \"a, etc.)
+        # Tréma
         r'\"e': "ë", r'\"a': "ä", r'\"i': "ï", r'\"o': "ö", r'\"u': "ü",
         r'\"E': "Ë", r'\"A': "Ä",
-        # Cédille (\c{c})
+        # Cédille et autres
         r"\c{c}": "ç", r"\c{C}": "Ç",
+        r"~": " ",  # Espace insécable
     }
     
     for latex, utf8 in latex_replacements.items():
@@ -37,8 +44,6 @@ def clean_str(s):
     s = re.sub(r'[\{\}]', '', s)
     # Convertit les accents TeX en UTF-8
     s = clean_latex_accents(s)
-    # Remplace les guillemets doubles par des simples
-    s = s.replace('"', "'")
     # Nettoie les espaces multiples
     s = re.sub(r'\s+', ' ', s)
     return s.strip()
@@ -71,7 +76,13 @@ def bibtex_to_academicpages(bib_file):
 
         # 2. Métadonnées nettoyées
         title = clean_str(entry.get('title', 'Sans titre'))
+        
+        # PROTECTION YAML : Double les apostrophes pour ne pas casser la chaîne entre guillemets simples
+        title_yaml = title.replace("'", "''")
+        
         authors = format_authors(entry.get('author', ''))
+        authors_yaml = authors.replace("'", "''")
+        
         year = entry.get('year', '2026')
         month = entry.get('month', '01')
         
@@ -82,20 +93,22 @@ def bibtex_to_academicpages(bib_file):
 
         date_str = f"{year}-{month}-01"
         venue = clean_str(entry.get('journal', entry.get('booktitle', '')))
+        venue_yaml = venue.replace("'", "''")
+        
         doi = entry.get('doi', '').strip()
         url = entry.get('url', '').strip()
         
         slug = re.sub(r'[^a-zA-Z0-9-]', '-', bib_id).lower()
         permalink = f"/publication/{year}-{slug}"
 
-        # 3. Écriture Markdown avec guillemets simples '...' STRICTS
+        # 3. Écriture Markdown avec protection des apostrophes YAML
         md_content = f"""---
-title: '{title}'
+title: '{title_yaml}'
 collection: publications
 permalink: {permalink}
 date: {date_str}
-venue: '{venue}'
-authors: '{authors}'
+venue: '{venue_yaml}'
+authors: '{authors_yaml}'
 bibfile: '/files/bib/{bib_id}.bib'
 """
         if doi:

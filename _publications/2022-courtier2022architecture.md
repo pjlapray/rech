@@ -1,5 +1,5 @@
 ---
-title: 'Architecture matérielle et traitement d'images pour un système de navigation basé sur la polarisation de la lumière solaire'
+title: 'Architecture matérielle et traitement d''images pour un système de navigation basé sur la polarisation de la lumière solaire'
 collection: publications
 permalink: /publication/2022-courtier2022architecture
 date: 2022-01-01
