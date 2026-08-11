@@ -2,21 +2,44 @@ import os
 import re
 import bibtexparser
 
+def clean_latex_accents(s):
+    """ Convertit les accents LaTeX courants (\'e, \'E, \^e, etc.) en caractères UTF-8 """
+    if not s:
+        return ""
+    
+    # Remplacement des accents TeX/LaTeX courants
+    latex_replacements = {
+        r"\'e": "é", r"\'E": "É",
+        r"\'a": "á", r"\`a": "à", r"\^a": "â",
+        r"\'i": "í", r"\^i": "î", r"\"i": "ï",
+        r"\'o": "ó", r"\^o": "ô",
+        r"\'u": "ú", r"\`u": "ù", r"\^u": "û",
+        r"\c{c}": "ç", r"\c{C}": "Ç",
+        r"\'": "",   # Supprime tout antislash suivi d'un apostrophe résiduel
+        r"\\": "",   # Supprime les antislashs restants
+    }
+    
+    for latex, utf8 in latex_replacements.items():
+        s = s.replace(latex, utf8)
+        
+    return s
+
 def clean_str(s):
     if not s:
         return ""
     # Enlève les accolades BibTeX { }
     s = re.sub(r'[\{\}]', '', s)
-    # Remplace les guillemets doubles par des guillemets simples pour éviter les conflits YAML
+    # Convertit les accents TeX en UTF-8
+    s = clean_latex_accents(s)
+    # Remplace les guillemets doubles par des simples
     s = s.replace('"', "'")
-    # Supprime les sauts de ligne et espaces superflus
+    # Nettoie les espaces multiples
     s = re.sub(r'\s+', ' ', s)
     return s.strip()
 
 def format_authors(author_str):
     if not author_str:
         return ""
-    # Nettoyage de base
     authors = clean_str(author_str)
     # Remplace les 'and' du BibTeX par des virgules
     authors = re.sub(r'\s+and\s+', ', ', authors, flags=re.IGNORECASE)
@@ -26,14 +49,13 @@ def bibtex_to_academicpages(bib_file):
     with open(bib_file, 'r', encoding='utf-8') as f:
         bib_database = bibtexparser.load(f)
 
-    # Création des dossiers
     os.makedirs("_publications", exist_ok=True)
     os.makedirs("files/bib", exist_ok=True)
 
     for entry in bib_database.entries:
         bib_id = entry.get('ID', 'pub')
         
-        # 1. Sauvegarde de la citation BibTeX individuelle dans files/bib/
+        # 1. Sauvegarde du fichier BibTeX individuel
         db_single = bibtexparser.bibdatabase.BibDatabase()
         db_single.entries = [entry]
         bib_filename = f"files/bib/{bib_id}.bib"
@@ -41,7 +63,7 @@ def bibtex_to_academicpages(bib_file):
         with open(bib_filename, 'w', encoding='utf-8') as out_bib:
             bibtexparser.dump(db_single, out_bib)
 
-        # 2. Récupération des métadonnées
+        # 2. Métadonnées nettoyées
         title = clean_str(entry.get('title', 'Sans titre'))
         authors = format_authors(entry.get('author', ''))
         year = entry.get('year', '2026')
@@ -60,7 +82,7 @@ def bibtex_to_academicpages(bib_file):
         slug = re.sub(r'[^a-zA-Z0-9-]', '-', bib_id).lower()
         permalink = f"/publication/{year}-{slug}"
 
-        # 3. Construction du Markdown (Utilisation systématique des guillemets simples '...')
+        # 3. Écriture Markdown avec guillemets simples '...' STRICTS
         md_content = f"""---
 title: '{title}'
 collection: publications
@@ -84,12 +106,12 @@ bibfile: '/files/bib/{bib_id}.bib'
         with open(filename, 'w', encoding='utf-8') as out_f:
             out_f.write(md_content)
 
-        print(f"✅ Généré : {filename} + {bib_filename}")
+        print(f"✅ Généré : {filename}")
 
 if __name__ == "__main__":
     bib_file = "mes_publications.bib" 
     if os.path.exists(bib_file):
         bibtex_to_academicpages(bib_file)
-        print("\n🎉 Régénération terminée sans erreurs YAML !")
+        print("\n🎉 Régénération terminée !")
     else:
         print(f"❌ Erreur : Le fichier {bib_file} est introuvable.")
