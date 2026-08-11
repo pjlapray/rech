@@ -37,10 +37,15 @@ author_profile: true
           </a>
         </h3>
 
-        <!-- Auteurs -->
-        {% if post.authors %}
+        <!-- Auteurs (Prise en compte de 'authors', 'author' ou 'citation') -->
+        {% assign publication_authors = post.authors | default: post.author %}
+        {% if publication_authors %}
+          <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px; font-weight: 500;">
+            {{ publication_authors }}
+          </div>
+        {% elsif post.citation %}
           <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px;">
-            {{ post.authors }}
+            {{ post.citation | split: '."' | first }}
           </div>
         {% endif %}
 
@@ -55,7 +60,7 @@ author_profile: true
           <!-- PDF / Link -->
           {% assign pdf_link = post.paperurl | default: post.pdf | default: post.link %}
           {% if pdf_link %}
-            <a href="{{ pdf_link }}" target="_blank" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #003366; color: #ffffff !important; text-decoration: none;">
+            <a href="{{ pdf_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #003366; color: #ffffff !important; text-decoration: none;">
               <i class="fas fa-file-pdf"></i> PDF
             </a>
           {% endif %}
@@ -63,22 +68,22 @@ author_profile: true
           <!-- Supp. Mat. -->
           {% assign supp_link = post.suppmat | default: post.supplement %}
           {% if supp_link %}
-            <a href="{{ supp_link }}" target="_blank" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #e67e22; color: #ffffff !important; text-decoration: none;">
+            <a href="{{ supp_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #e67e22; color: #ffffff !important; text-decoration: none;">
               <i class="fas fa-folder-plus"></i> Supp.
             </a>
           {% endif %}
 
           <!-- Code / GitHub -->
           {% if post.code %}
-            <a href="{{ post.code }}" target="_blank" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #24292e; color: #ffffff !important; text-decoration: none;">
+            <a href="{{ post.code }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #24292e; color: #ffffff !important; text-decoration: none;">
               <i class="fab fa-github"></i> Code
             </a>
           {% endif %}
 
-          <!-- BibTeX (Corrigé : couleur du texte et de l'icône en sombre) -->
+          <!-- BibTeX -->
           {% assign bib_link = post.bibfile | default: post.bibtex %}
           {% if bib_link %}
-            <a href="{{ bib_link | relative_url }}" download class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; border: 1px solid #bbb; color: #333333 !important; background-color: #e8e9ea; text-decoration: none;">
+            <a href="{{ bib_link | relative_url }}" target="_blank" download class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; border: 1px solid #bbb; color: #333333 !important; background-color: #e8e9ea; text-decoration: none;">
               <i class="fas fa-quote-right" style="color: #333333 !important;"></i> BibTeX
             </a>
           {% endif %}
