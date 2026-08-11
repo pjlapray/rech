@@ -9,14 +9,20 @@ def clean_latex_accents(s):
     
     # Remplacement des accents TeX/LaTeX courants
     latex_replacements = {
-        r"\'e": "é", r"\'E": "É",
-        r"\'a": "á", r"\`a": "à", r"\^a": "â",
-        r"\'i": "í", r"\^i": "î", r"\"i": "ï",
-        r"\'o": "ó", r"\^o": "ô",
-        r"\'u": "ú", r"\`u": "ù", r"\^u": "û",
+        # Accent grave (\`e, \`a, \`u, etc.)
+        r"\`e": "è", r"\`a": "à", r"\`u": "ù", r"\`o": "ò", r"\`i": "ì",
+        r"\`E": "È", r"\`A": "À",
+        # Accent aigu (\'e, \'a, etc.)
+        r"\'e": "é", r"\'a": "á", r"\'i": "í", r"\'o": "ó", r"\'u": "ú",
+        r"\'E": "É", r"\'A": "Á",
+        # Circonflexe (\^e, \^a, etc.)
+        r"\^e": "ê", r"\^a": "â", r"\^i": "î", r"\^o": "ô", r"\^u": "û",
+        r"\^E": "Ê", r"\^A": "Â",
+        # Tréma (\"e, \"a, etc.)
+        r'\"e': "ë", r'\"a': "ä", r'\"i': "ï", r'\"o': "ö", r'\"u': "ü",
+        r'\"E': "Ë", r'\"A': "Ä",
+        # Cédille (\c{c})
         r"\c{c}": "ç", r"\c{C}": "Ç",
-        r"\'": "",   # Supprime tout antislash suivi d'un apostrophe résiduel
-        r"\\": "",   # Supprime les antislashs restants
     }
     
     for latex, utf8 in latex_replacements.items():

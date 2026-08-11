@@ -1,5 +1,5 @@
 ---
-title: 'Les Syst\`emes Embarqués Reconfigurables enseignés à des automaticiens'
+title: 'Les Systèmes Embarqués Reconfigurables enseignés à des automaticiens'
 collection: publications
 permalink: /publication/2022-vigne2022systemes
 date: 2022-01-01
