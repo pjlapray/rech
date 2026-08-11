@@ -5,9 +5,12 @@ import bibtexparser
 def clean_str(s):
     if not s:
         return ""
-    # Enlève les accolades BibTeX { } et échappe les guillemets
+    # Enlève les accolades BibTeX { }
     s = re.sub(r'[\{\}]', '', s)
-    s = s.replace('"', '\\"')
+    # Remplace les guillemets doubles par des guillemets simples pour éviter les conflits YAML
+    s = s.replace('"', "'")
+    # Supprime les sauts de ligne et espaces superflus
+    s = re.sub(r'\s+', ' ', s)
     return s.strip()
 
 def format_authors(author_str):
@@ -40,7 +43,7 @@ def bibtex_to_academicpages(bib_file):
 
         # 2. Récupération des métadonnées
         title = clean_str(entry.get('title', 'Sans titre'))
-        authors = format_authors(entry.get('author', ''))  # <--- RÉCUPÉRATION DES AUTEURS
+        authors = format_authors(entry.get('author', ''))
         year = entry.get('year', '2026')
         month = entry.get('month', '01')
         
@@ -51,20 +54,20 @@ def bibtex_to_academicpages(bib_file):
 
         date_str = f"{year}-{month}-01"
         venue = clean_str(entry.get('journal', entry.get('booktitle', '')))
-        doi = entry.get('doi', '')
-        url = entry.get('url', '')
+        doi = entry.get('doi', '').strip()
+        url = entry.get('url', '').strip()
         
         slug = re.sub(r'[^a-zA-Z0-9-]', '-', bib_id).lower()
         permalink = f"/publication/{year}-{slug}"
 
-        # 3. Construction du Markdown avec les champs 'authors' et 'bibfile'
+        # 3. Construction du Markdown (Utilisation systématique des guillemets simples '...')
         md_content = f"""---
-title: "{title}"
+title: '{title}'
 collection: publications
 permalink: {permalink}
 date: {date_str}
 venue: '{venue}'
-authors: "{authors}"
+authors: '{authors}'
 bibfile: '/files/bib/{bib_id}.bib'
 """
         if doi:
@@ -87,6 +90,6 @@ if __name__ == "__main__":
     bib_file = "mes_publications.bib" 
     if os.path.exists(bib_file):
         bibtex_to_academicpages(bib_file)
-        print("\n🎉 Régénération terminée avec auteurs et fichiers BibTeX !")
+        print("\n🎉 Régénération terminée sans erreurs YAML !")
     else:
         print(f"❌ Erreur : Le fichier {bib_file} est introuvable.")
