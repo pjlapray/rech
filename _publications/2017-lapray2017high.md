@@ -1,10 +1,10 @@
 ---
-title: "High dynamic range spectral imaging pipeline for multispectral filter array cameras"
+title: 'High dynamic range spectral imaging pipeline for multispectral filter array cameras'
 collection: publications
 permalink: /publication/2017-lapray2017high
 date: 2017-01-01
 venue: 'Sensors'
-authors: "Lapray, Pierre-Jean, Thomas, Jean-Baptiste, Gouton, Pierre"
+authors: 'Lapray, Pierre-Jean, Thomas, Jean-Baptiste, Gouton, Pierre'
 bibfile: '/files/bib/lapray2017high.bib'
 ---
 

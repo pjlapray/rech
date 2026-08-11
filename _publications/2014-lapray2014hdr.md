@@ -1,10 +1,10 @@
 ---
-title: "HDR-ARtiSt: A 1280x1024-pixel Adaptive Real-time Smart camera for High Dynamic Range video"
+title: 'HDR-ARtiSt: A 1280x1024-pixel Adaptive Real-time Smart camera for High Dynamic Range video'
 collection: publications
 permalink: /publication/2014-lapray2014hdr
 date: 2014-01-01
 venue: 'SPIE Photonics Europe'
-authors: "Lapray, Pierre-Jean, Heyrman, Barth\'el\'emy, Ginhac, Dominique"
+authors: 'Lapray, Pierre-Jean, Heyrman, Barthélémy, Ginhac, Dominique'
 bibfile: '/files/bib/lapray2014hdr.bib'
 ---
 
