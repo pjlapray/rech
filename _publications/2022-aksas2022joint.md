@@ -4,6 +4,7 @@ collection: publications
 permalink: /publication/2022-aksas2022joint
 date: 2022-01-01
 venue: 'Unconventional Optical Imaging III'
+authors: "Aksas, Lyes, Lapray, Pierre-Jean, Foulonneau, Alban, Bigu\'e, Laurent"
 bibfile: '/files/bib/aksas2022joint.bib'
 ---
 

@@ -5,9 +5,19 @@ import bibtexparser
 def clean_str(s):
     if not s:
         return ""
+    # Enlève les accolades BibTeX { } et échappe les guillemets
     s = re.sub(r'[\{\}]', '', s)
     s = s.replace('"', '\\"')
     return s.strip()
+
+def format_authors(author_str):
+    if not author_str:
+        return ""
+    # Nettoyage de base
+    authors = clean_str(author_str)
+    # Remplace les 'and' du BibTeX par des virgules
+    authors = re.sub(r'\s+and\s+', ', ', authors, flags=re.IGNORECASE)
+    return authors
 
 def bibtex_to_academicpages(bib_file):
     with open(bib_file, 'r', encoding='utf-8') as f:
@@ -30,7 +40,8 @@ def bibtex_to_academicpages(bib_file):
 
         # 2. Récupération des métadonnées
         title = clean_str(entry.get('title', 'Sans titre'))
-        year = entry.get('year', '2024')
+        authors = format_authors(entry.get('author', ''))  # <--- RÉCUPÉRATION DES AUTEURS
+        year = entry.get('year', '2026')
         month = entry.get('month', '01')
         
         if len(month) == 1:
@@ -46,13 +57,14 @@ def bibtex_to_academicpages(bib_file):
         slug = re.sub(r'[^a-zA-Z0-9-]', '-', bib_id).lower()
         permalink = f"/publication/{year}-{slug}"
 
-        # 3. Construction du Markdown avec la clé 'bibfile'
+        # 3. Construction du Markdown avec les champs 'authors' et 'bibfile'
         md_content = f"""---
 title: "{title}"
 collection: publications
 permalink: {permalink}
 date: {date_str}
 venue: '{venue}'
+authors: "{authors}"
 bibfile: '/files/bib/{bib_id}.bib'
 """
         if doi:
@@ -75,6 +87,6 @@ if __name__ == "__main__":
     bib_file = "mes_publications.bib" 
     if os.path.exists(bib_file):
         bibtex_to_academicpages(bib_file)
-        print("\n🎉 Régénération terminée avec fichiers BibTeX !")
+        print("\n🎉 Régénération terminée avec auteurs et fichiers BibTeX !")
     else:
         print(f"❌ Erreur : Le fichier {bib_file} est introuvable.")
