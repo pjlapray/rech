@@ -7,92 +7,174 @@ author_profile: true
 
 {% include base_path %}
 
+{% assign categories = "Journal Articles,Peer Reviewed Conference Papers,Technical Reports and Miscellaneous" | split: "," %}
+
 <div class="publications-container" style="margin-top: 20px;">
-  {% assign sorted_publications = site.publications | sort: 'date' | reverse %}
-  {% for post in sorted_publications %}
+  {% for cat in categories %}
+    {% assign cat_pubs = site.publications | where: "category", cat | sort: 'date' | reverse %}
     
-    <div class="publication-item" style="display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid #e0e0e0; align-items: flex-start;">
-      
-      <!-- 1. Colonne Année & Image/Miniature -->
-      <div class="pub-sidebar" style="flex: 0 0 140px; text-align: center;">
-        <span class="pub-year" style="display: block; font-weight: bold; font-size: 1.1em; color: #003366; margin-bottom: 8px;">
-          {{ post.date | date: "%Y" }}
-        </span>
-        {% if post.teaser %}
-          <img src="{{ post.teaser | relative_url }}" alt="Teaser image" style="width: 100%; max-width: 130px; height: auto; border-radius: 4px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-        {% else %}
-          <div style="width: 130px; height: 80px; background-color: #f5f5f5; border: 1px dashed #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 0.8em; margin: 0 auto;">
-            Pas d'image
-          </div>
-        {% endif %}
-      </div>
+    {% if cat_pubs.size > 0 %}
+      <h2 style="margin-top: 35px; margin-bottom: 15px; border-bottom: 2px solid #003366; padding-bottom: 5px; color: #003366;">
+        {{ cat }}
+      </h2>
 
-      <!-- 2. Colonne Citation Texte & Liens/Icônes -->
-      <div class="pub-content" style="flex: 1;">
-        
-        <!-- Titre -->
-        <h3 class="pub-title" style="margin: 0 0 6px 0; font-size: 1.05em; line-height: 1.3;">
-          <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #222; font-weight: 600;">
-            {{ post.title }}
-          </a>
-        </h3>
-
-        <!-- Auteurs (Prise en compte de 'authors', 'author' ou 'citation') -->
-        {% assign publication_authors = post.authors | default: post.author %}
-        {% if publication_authors %}
-          <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px; font-weight: 500;">
-            {{ publication_authors }}
-          </div>
-        {% elsif post.citation %}
-          <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px;">
-            {{ post.citation | split: '."' | first }}
-          </div>
-        {% endif %}
-
-        <!-- Journal / Conférence / Éditeur -->
-        <div class="pub-venue" style="font-style: italic; font-size: 0.9em; color: #666; margin-bottom: 10px;">
-          {{ post.venue }}{% if post.publisher %}, {{ post.publisher }}{% endif %}{% if post.paper_details %}, {{ post.paper_details }}{% endif %}
-        </div>
-
-        <!-- 3. Boutons et Icones -->
-        <div class="pub-links" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 0.8em; margin-top: 4px;">
+      {% for post in cat_pubs %}
+        <div class="publication-item" style="display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid #e0e0e0; align-items: flex-start;">
           
-          <!-- PDF / Link -->
-          {% assign pdf_link = post.paperurl | default: post.pdf | default: post.link %}
-          {% if pdf_link %}
-            <a href="{{ pdf_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #003366; color: #ffffff !important; text-decoration: none;">
-              <i class="fas fa-file-pdf"></i> PDF
-            </a>
-          {% endif %}
+          <!-- 1. Colonne Année & Image/Miniature -->
+          <div class="pub-sidebar" style="flex: 0 0 140px; text-align: center;">
+            <span class="pub-year" style="display: block; font-weight: bold; font-size: 1.1em; color: #003366; margin-bottom: 8px;">
+              {{ post.date | date: "%Y" }}
+            </span>
+            {% if post.teaser %}
+              <img src="{{ post.teaser | relative_url }}" alt="Teaser image" style="width: 100%; max-width: 130px; height: auto; border-radius: 4px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            {% else %}
+              <div style="width: 130px; height: 80px; background-color: #f5f5f5; border: 1px dashed #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 0.8em; margin: 0 auto;">
+                Pas d'image
+              </div>
+            {% endif %}
+          </div>
 
-          <!-- Supp. Mat. -->
-          {% assign supp_link = post.suppmat | default: post.supplement %}
-          {% if supp_link %}
-            <a href="{{ supp_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #e67e22; color: #ffffff !important; text-decoration: none;">
-              <i class="fas fa-folder-plus"></i> Supp.
-            </a>
-          {% endif %}
+          <!-- 2. Colonne Citation Texte & Liens/Icônes -->
+          <div class="pub-content" style="flex: 1;">
+            
+            <!-- Titre -->
+            <h3 class="pub-title" style="margin: 0 0 6px 0; font-size: 1.05em; line-height: 1.3;">
+              <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: #222; font-weight: 600;">
+                {{ post.title }}
+              </a>
+            </h3>
 
-          <!-- Code / GitHub -->
-          {% if post.code %}
-            <a href="{{ post.code }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #24292e; color: #ffffff !important; text-decoration: none;">
-              <i class="fab fa-github"></i> Code
-            </a>
-          {% endif %}
+            <!-- Auteurs -->
+            {% assign publication_authors = post.authors | default: post.author %}
+            {% if publication_authors %}
+              <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px; font-weight: 500;">
+                {{ publication_authors }}
+              </div>
+            {% elsif post.citation %}
+              <div class="pub-authors" style="font-size: 0.95em; color: #444; margin-bottom: 4px;">
+                {{ post.citation | split: '."' | first }}
+              </div>
+            {% endif %}
 
-          <!-- BibTeX -->
-          {% assign bib_link = post.bibfile | default: post.bibtex %}
-          {% if bib_link %}
-            <a href="{{ bib_link | relative_url }}" target="_blank" download class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; border: 1px solid #bbb; color: #333333 !important; background-color: #e8e9ea; text-decoration: none;">
-              <i class="fas fa-quote-right" style="color: #333333 !important;"></i> BibTeX
-            </a>
-          {% endif %}
+            <!-- Journal / Conférence / Éditeur -->
+            <div class="pub-venue" style="font-style: italic; font-size: 0.9em; color: #666; margin-bottom: 10px;">
+              {{ post.venue }}{% if post.publisher %}, {{ post.publisher }}{% endif %}{% if post.paper_details %}, {{ post.paper_details }}{% endif %}
+            </div>
+
+            <!-- 3. Boutons et Icônes -->
+            <div class="pub-links" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 0.8em; margin-top: 4px;">
+              
+              <!-- PDF -->
+              {% assign pdf_link = post.paperurl | default: post.pdf | default: post.link %}
+              {% if pdf_link %}
+                <a href="{{ pdf_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #003366; color: #ffffff !important; text-decoration: none;">
+                  <i class="fas fa-file-pdf"></i> PDF
+                </a>
+              {% endif %}
+
+              <!-- Supp. Mat. -->
+              {% assign supp_link = post.suppmat | default: post.supplement %}
+              {% if supp_link %}
+                <a href="{{ supp_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #e67e22; color: #ffffff !important; text-decoration: none;">
+                  <i class="fas fa-folder-plus"></i> Supp.
+                </a>
+              {% endif %}
+
+              <!-- Code -->
+              {% if post.code %}
+                <a href="{{ post.code }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #24292e; color: #ffffff !important; text-decoration: none;">
+                  <i class="fab fa-github"></i> Code
+                </a>
+              {% endif %}
+
+              <!-- DOI -->
+              {% assign raw_doi = post.doiurl | default: post.doi %}
+              {% if raw_doi %}
+                {% if raw_doi contains "http" %}
+                  {% assign doi_link = raw_doi %}
+                {% else %}
+                  {% assign doi_link = "https://doi.org/" | append: raw_doi %}
+                {% endif %}
+                <a href="{{ doi_link }}" target="_blank" rel="noopener noreferrer" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; background-color: #0077b6; color: #ffffff !important; text-decoration: none;">
+                  <i class="fa fa-external-link" aria-hidden="true"></i> DOI
+                </a>
+              {% endif %}
+
+              <!-- Bouton BibTeX -->
+              {% assign bib_link = post.bibfile | default: post.bibtex %}
+              {% if bib_link or post.bibtex_text %}
+                <button type="button" onclick="toggleBibtex('bib-{{ cat | slugify }}-{{ forloop.index }}', '{{ bib_link | relative_url }}')" class="btn btn--small" style="padding: 2px 6px; border-radius: 3px; border: 1px solid #bbb; color: #333333 !important; background-color: #e8e9ea; cursor: pointer;">
+                  <i class="fas fa-quote-right" style="color: #333333 !important;"></i> BibTeX
+                </button>
+              {% endif %}
+
+            </div>
+
+            <!-- Bloc dynamique BibTeX -->
+            {% if bib_link or post.bibtex_text %}
+              <div id="bib-{{ cat | slugify }}-{{ forloop.index }}" class="bibtex-box" style="display: none; margin-top: 10px; background-color: #f8f9fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 12px; position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid #e1e4e8; padding-bottom: 6px;">
+                  <span style="font-weight: bold; font-size: 0.85em; color: #57606a;">Format BibTeX</span>
+                  <button type="button" onclick="copyBibtex('code-{{ cat | slugify }}-{{ forloop.index }}', this)" class="btn btn--small" style="padding: 2px 8px; font-size: 0.8em; border-radius: 4px; background-color: #2da44e; color: #ffffff !important; border: none; cursor: pointer;">
+                    <i class="fas fa-copy"></i> Copier
+                  </button>
+                </div>
+                <pre id="code-{{ cat | slugify }}-{{ forloop.index }}" style="margin: 0; font-family: monospace; font-size: 0.82em; color: #24292f; white-space: pre-wrap; word-break: break-all; max-height: 250px; overflow-y: auto;">{% if post.bibtex_text %}{{ post.bibtex_text }}{% else %}Chargement du BibTeX...{% endif %}</pre>
+              </div>
+            {% endif %}
+
+          </div>
 
         </div>
-
-      </div>
-
-    </div>
-
+      {% endfor %}
+    {% endif %}
   {% endfor %}
 </div>
+
+<!-- Script JavaScript d'interaction -->
+<script>
+function toggleBibtex(id, url) {
+  var box = document.getElementById(id);
+  if (!box) return;
+  
+  if (box.style.display === "none" || box.style.display === "") {
+    box.style.display = "block";
+    
+    var codeBlock = box.querySelector('pre');
+    if (url && codeBlock && codeBlock.innerText.trim() === "Chargement du BibTeX...") {
+      fetch(url)
+        .then(function(response) {
+          if (!response.ok) throw new Error("Fichier introuvable");
+          return response.text();
+        })
+        .then(function(data) {
+          codeBlock.innerText = data;
+        })
+        .catch(function(err) {
+          codeBlock.innerText = "Impossible de charger le fichier BibTeX.";
+        });
+    }
+  } else {
+    box.style.display = "none";
+  }
+}
+
+function copyBibtex(codeId, btnElement) {
+  var codeBlock = document.getElementById(codeId);
+  if (!codeBlock) return;
+  
+  var text = codeBlock.innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var originalHTML = btnElement.innerHTML;
+    btnElement.innerHTML = '<i class="fas fa-check"></i> Copié !';
+    btnElement.style.backgroundColor = '#1f883d';
+    setTimeout(function() {
+      btnElement.innerHTML = originalHTML;
+      btnElement.style.backgroundColor = '#2da44e';
+    }, 2000);
+  }).catch(function(err) {
+    console.error('Erreur lors de la copie : ', err);
+  });
+}
+</script>

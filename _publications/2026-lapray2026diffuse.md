@@ -1,18 +1,17 @@
 ---
 title: 'Diffuse and specular component separation using multispectral and polarization images'
 collection: publications
+category: 'Journal Articles'
 permalink: /publication/2026-lapray2026diffuse
 date: 2026-01-01
 venue: 'Signal, Image and Video Processing'
-authors: 'Lapray, Pierre-Jean, Mourllion, Benjamin, Bigué, Laurent'
+authors: 'Pierre-Jean Lapray, Benjamin Mourllion, Laurent Bigué'
 bibfile: '/files/bib/lapray2026diffuse.bib'
 # --- LIENS ET FICHIERS COMPLÉMENTAIRES ---
-paperurl: '/files/pdf/sivp2026.pdf'     # Lien vers le PDF (ou DOI)
-doi: '10.1007/s11760-026-05479-z'
+paperurl: '../files/pdf/sivp2026.pdf'     # Lien vers le PDF (ou DOI)
 code: 'https://figshare.com/articles/dataset/Images/28151753' # Lien vers le code (ex: GitHub)
 #slidesurl: '/files/slides-2026.pdf'              # Lien vers les diapositives
 suppmat: 'https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs11760-026-05479-z/MediaObjects/11760_2026_5479_MOESM1_ESM.pdf'     # Matériel supplémentaire
 teaser: '/files/images/sivp2026.jpg'     # Image d'illustration (vignette)
+doi: '10.1007/s11760-026-05479-z'
 ---
-
-
